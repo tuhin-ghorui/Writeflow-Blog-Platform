@@ -4,7 +4,7 @@
   "description": "WriteFlow Blog Platform Workspace",
   "scripts": {
     "install-all": "npm install && cd server && npm install && cd ../client && npm install",
-    "server": "cd server && node server.js",
+    "server": "cd server && node --watch server.js",
     "client": "cd client && npm run dev",
     "dev": "npx concurrently \"npm run server\" \"npm run client\""
   },

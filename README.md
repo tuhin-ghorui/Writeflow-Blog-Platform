@@ -78,7 +78,7 @@ WriteFlow/
    ```
 3. Create a `.env` file inside the `server/` folder (use `.env.example` as a template):
    ```env
-   PORT=5000
+   PORT=5001
    MONGODB_URI=mongodb://localhost:27017/writeflow
    JWT_SECRET=supersecretkeywriteflow123
    NODE_ENV=development
@@ -99,7 +99,7 @@ WriteFlow/
    ```
 3. Create a `.env` file inside the `client/` folder:
    ```env
-   VITE_API_URL=http://localhost:5000/api
+   VITE_API_URL=http://localhost:5001/api
    ```
 4. Start the frontend development server:
    ```bash
