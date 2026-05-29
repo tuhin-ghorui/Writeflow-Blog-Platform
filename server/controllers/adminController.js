@@ -94,8 +94,25 @@ const deleteAdminUser = async (req, res) => {
   }
 };
 
+// @desc    Get all comments in the system for moderation
+// @route   GET /api/admin/comments
+// @access  Private/Admin
+const getAdminComments = async (req, res) => {
+  try {
+    const comments = await Comment.find()
+      .populate('user', 'fullName username avatar')
+      .populate('blog', 'title slug')
+      .sort({ createdAt: -1 });
+    res.json(comments);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error retrieving comments for moderation' });
+  }
+};
+
 module.exports = {
   getAdminStats,
   getAdminUsers,
   deleteAdminUser,
+  getAdminComments,
 };
