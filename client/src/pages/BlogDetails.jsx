@@ -6,6 +6,36 @@ import CommentSection from '../components/CommentSection';
 import { Calendar, Eye, Heart, BookOpen, Share2, ArrowLeft, Edit3, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
+// Convert markdown to basic HTML
+const renderMarkdown = (content) => {
+  if (!content) return '';
+  let html = content;
+  // Escaping dangerous scripts (handled in middleware too)
+  html = html.replace(/<script[^>]*>([\s\S]*?)<\/script>/gi, '');
+
+  // Paragraph breaks
+  html = html.split('\n\n').map(p => {
+    if (p.startsWith('#') || p.startsWith('`') || p.startsWith('-') || p.startsWith('>')) return p;
+    return `<p>${p.replace(/\n/g, '<br />')}</p>`;
+  }).join('\n\n');
+
+  // Simple Markdown translation
+  html = html
+    .replace(/## (.*)/g, '<h2>$1</h2>')
+    .replace(/# (.*)/g, '<h1>$1</h1>')
+    .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+    .replace(/\*(.*?)\*/g, '<em>$1</em>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>')
+    .replace(/^\s*-\s*(.*)/gm, '<li>$1</li>')
+    .replace(/<li>(.*)<\/li>/g, '<ul><li>$1</li></ul>') // Wrap in ul loosely
+    .replace(/<\/ul>\n<ul>/g, '') // Flatten lists
+    .replace(/```(\w*)\n([\s\S]*?)```/g, '<pre><code>$2</code></pre>')
+    .replace(/^\s*>\s*(.*)/gm, '<blockquote>$1</blockquote>');
+
+  return html;
+};
+
 const BlogDetails = () => {
   const { slug } = useParams();
   const navigate = useNavigate();
@@ -233,7 +263,7 @@ const BlogDetails = () => {
           {/* HTML rendered Content */}
           <div
             className="blog-content leading-relaxed"
-            dangerouslySetInnerHTML={{ __html: blog.content }}
+            dangerouslySetInnerHTML={{ __html: renderMarkdown(blog.content) }}
           ></div>
 
           {/* Tags list */}
