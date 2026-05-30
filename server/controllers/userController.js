@@ -96,6 +96,7 @@ const updateUserProfile = async (req, res) => {
       email: updatedUser.email,
       avatar: updatedUser.avatar,
       role: updatedUser.role,
+      createdAt: updatedUser.createdAt,
     });
   } catch (error) {
     console.error(error);

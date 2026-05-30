@@ -154,7 +154,7 @@ const Profile = () => {
             </div>
             <div className="flex items-center justify-center gap-1 text-xs font-semibold text-slate-455">
               <Calendar className="w-3.5 h-3.5" />
-              Joined {new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
+              Joined {user?.createdAt ? new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
             </div>
             {user.role === 'admin' && (
               <span className="px-3 py-1 rounded-full text-xs font-bold bg-amber-50 dark:bg-amber-950/20 border border-amber-250/30 text-amber-600 dark:text-amber-450 uppercase inline-block">

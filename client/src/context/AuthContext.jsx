@@ -55,6 +55,7 @@ export const AuthProvider = ({ children }) => {
         email: data.email,
         avatar: data.avatar,
         role: data.role,
+        createdAt: data.createdAt,
       };
       
       localStorage.setItem('writeflow_user', JSON.stringify(userPayload));
@@ -86,6 +87,7 @@ export const AuthProvider = ({ children }) => {
         email: data.email,
         avatar: data.avatar,
         role: data.role,
+        createdAt: data.createdAt,
       };
 
       localStorage.setItem('writeflow_user', JSON.stringify(userPayload));
