@@ -48,6 +48,13 @@ app.use('/api/blogs', blogRoutes);
 app.use('/api/comments', commentRoutes);
 app.use('/api/admin', adminRoutes);
 
+// Fallback direct routes (in case requests reach server without /api prefix)
+app.use('/auth', authRoutes);
+app.use('/users', userRoutes);
+app.use('/blogs', blogRoutes);
+app.use('/comments', commentRoutes);
+app.use('/admin', adminRoutes);
+
 // Base Route
 app.get('/', (req, res) => {
   res.json({ message: 'Welcome to WriteFlow API' });
