@@ -8,12 +8,12 @@ import { ArrowRight, Eye, Heart, Search, Calendar, User, BookOpen } from 'lucide
 import toast from 'react-hot-toast';
 
 const CATEGORIES = [
-  { name: 'Technology', count: '12 Posts', color: 'from-blue-500 to-cyan-500', icon: '💻' },
-  { name: 'Lifestyle', count: '8 Posts', color: 'from-pink-500 to-rose-500', icon: '🌿' },
-  { name: 'Business', count: '6 Posts', color: 'from-emerald-500 to-teal-500', icon: '📈' },
-  { name: 'Health', count: '9 Posts', color: 'from-amber-500 to-orange-500', icon: '❤️' },
-  { name: 'Travel', count: '15 Posts', color: 'from-purple-500 to-indigo-500', icon: '✈️' },
-  { name: 'Design', count: '4 Posts', color: 'from-violet-500 to-fuchsia-500', icon: '🎨' },
+  { name: 'Technology', color: 'from-blue-500 to-cyan-500', icon: '💻' },
+  { name: 'Lifestyle', color: 'from-pink-500 to-rose-500', icon: '🌿' },
+  { name: 'Business', color: 'from-emerald-500 to-teal-500', icon: '📈' },
+  { name: 'Health', color: 'from-amber-500 to-orange-500', icon: '❤️' },
+  { name: 'Travel', color: 'from-purple-500 to-indigo-500', icon: '✈️' },
+  { name: 'Design', color: 'from-violet-500 to-fuchsia-500', icon: '🎨' },
 ];
 
 const Home = () => {
@@ -21,6 +21,7 @@ const Home = () => {
   const navigate = useNavigate();
   const [latestBlogs, setLatestBlogs] = useState([]);
   const [featuredBlog, setFeaturedBlog] = useState(null);
+  const [categoryCounts, setCategoryCounts] = useState({});
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -36,6 +37,16 @@ const Home = () => {
         const popularData = await api.get('/blogs?sort=most-viewed&limit=1');
         if (popularData.blogs && popularData.blogs.length > 0) {
           setFeaturedBlog(popularData.blogs[0]);
+        }
+
+        // Fetch real category post counts
+        try {
+          const countsData = await api.get('/blogs/categories/counts');
+          if (countsData) {
+            setCategoryCounts(countsData);
+          }
+        } catch (e) {
+          // Fallback if category counts endpoint is unavailable
         }
       } catch (error) {
         console.error('Error fetching landing page data:', error);
@@ -131,7 +142,11 @@ const Home = () => {
               <h3 className="font-bold text-slate-850 dark:text-slate-200 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors">
                 {category.name}
               </h3>
-              <p className="text-xs text-slate-400 mt-1">{category.count}</p>
+              <p className="text-xs text-slate-400 mt-1">
+                {(categoryCounts[category.name] || 0) === 1
+                  ? '1 Post'
+                  : `${categoryCounts[category.name] || 0} Posts`}
+              </p>
             </Link>
           ))}
         </div>

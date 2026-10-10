@@ -317,6 +317,27 @@ const likeBlog = async (req, res) => {
   }
 };
 
+// @desc    Get counts of blogs grouped by category
+// @route   GET /api/blogs/categories/counts
+// @access  Public
+const getCategoryCounts = async (req, res) => {
+  try {
+    const counts = await Blog.aggregate([
+      { $group: { _id: '$category', count: { $sum: 1 } } }
+    ]);
+    const categoryMap = {};
+    counts.forEach((item) => {
+      if (item._id) {
+        categoryMap[item._id] = item.count;
+      }
+    });
+    res.json(categoryMap);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Failed to fetch category counts' });
+  }
+};
+
 module.exports = {
   createBlog,
   getBlogs,
@@ -324,4 +345,5 @@ module.exports = {
   updateBlog,
   deleteBlog,
   likeBlog,
+  getCategoryCounts,
 };

@@ -7,12 +7,16 @@ const {
   updateBlog,
   deleteBlog,
   likeBlog,
+  getCategoryCounts,
 } = require('../controllers/blogController');
 const { protect } = require('../middleware/authMiddleware');
 
 router.route('/')
   .get(getBlogs)
   .post(protect, createBlog);
+
+router.route('/categories/counts')
+  .get(getCategoryCounts);
 
 router.route('/:slugOrId')
   .get(getBlogBySlugOrId);
