@@ -170,8 +170,9 @@ const CreateBlog = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Cover Image URL */}
             <div className="space-y-1.5">
-              <label htmlFor="coverImage" className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center gap-1">
-                <Image className="w-3.5 h-3.5" /> Cover Image URL
+              <label htmlFor="coverImage" className="text-xs font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wide flex items-center justify-between">
+                <span className="flex items-center gap-1"><Image className="w-3.5 h-3.5" /> Cover Image URL</span>
+                <span className="text-[11px] font-normal text-slate-400 lowercase">Direct image link (jpg, png, webp)</span>
               </label>
               <input
                 id="coverImage"
@@ -181,6 +182,32 @@ const CreateBlog = () => {
                 placeholder="https://images.unsplash.com/photo-..."
                 className="w-full rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950 px-4 py-3 text-sm text-slate-800 dark:text-slate-100 placeholder-slate-450 focus:outline-none focus:border-primary-500/40"
               />
+              {coverImage && (
+                <div className="mt-2 space-y-1.5">
+                  {coverImage.includes('pinterest.com/pin/') && (
+                    <p className="text-xs text-amber-500 font-medium">
+                      ⚠️ Note: This is a Pinterest page link. Right-click the image on Pinterest and choose &quot;Copy Image Address&quot; for the direct picture link.
+                    </p>
+                  )}
+                  <div className="relative h-28 w-full rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 bg-slate-100 dark:bg-slate-900">
+                    <img
+                      src={coverImage}
+                      alt="Cover Preview"
+                      referrerPolicy="no-referrer"
+                      crossOrigin="anonymous"
+                      className="w-full h-full object-cover"
+                      onError={(e) => {
+                        e.currentTarget.style.display = 'none';
+                        const fallback = e.currentTarget.nextSibling;
+                        if (fallback) fallback.style.display = 'flex';
+                      }}
+                    />
+                    <div style={{ display: 'none' }} className="w-full h-full items-center justify-center p-3 text-xs text-red-500 text-center font-medium bg-red-50/50 dark:bg-red-950/30">
+                      Could not load image. Make sure this is a direct image URL (e.g. from Unsplash or direct image address).
+                    </div>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Tags */}

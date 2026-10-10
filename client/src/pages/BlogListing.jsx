@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSearchParams, Link } from 'react-router-dom';
 import api from '../services/api';
 import SkeletonCard from '../components/SkeletonCard';
+import SafeImage from '../components/SafeImage';
 import { Search, Calendar, Eye, Heart, BookOpen, ChevronLeft, ChevronRight, X, SlidersHorizontal } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -216,8 +217,8 @@ const BlogListing = () => {
               className="bg-white dark:bg-slate-900 border border-slate-150/60 dark:border-slate-800/60 rounded-3xl overflow-hidden shadow-sm hover:shadow-md hover:border-primary-500/25 dark:hover:border-primary-500/25 hover:-translate-y-1 transition-all flex flex-col h-full"
             >
               <Link to={`/blog/${blog.slug}`} className="block h-52 overflow-hidden bg-slate-100 dark:bg-slate-850 relative group">
-                <img
-                  src={blog.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800'}
+                <SafeImage
+                  src={blog.coverImage}
                   alt={blog.title}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                 />

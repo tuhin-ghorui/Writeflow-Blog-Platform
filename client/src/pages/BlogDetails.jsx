@@ -3,6 +3,7 @@ import { useParams, Link, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import CommentSection from '../components/CommentSection';
+import SafeImage from '../components/SafeImage';
 import { Calendar, Eye, Heart, BookOpen, Share2, ArrowLeft, Edit3, Trash2 } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -208,7 +209,7 @@ const BlogDetails = () => {
           {/* Large Banner Image */}
           {blog.coverImage && (
             <div className="h-[350px] sm:h-[450px] w-full rounded-3xl overflow-hidden shadow-md">
-              <img
+              <SafeImage
                 src={blog.coverImage}
                 alt={blog.title}
                 className="w-full h-full object-cover"
@@ -299,7 +300,7 @@ const BlogDetails = () => {
                   <div key={post._id} className="flex gap-3 group">
                     {post.coverImage && (
                       <Link to={`/blog/${post.slug}`} className="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 flex-shrink-0">
-                        <img
+                        <SafeImage
                           src={post.coverImage}
                           alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform"
@@ -334,7 +335,7 @@ const BlogDetails = () => {
                   <div key={post._id} className="flex gap-3 group">
                     {post.coverImage && (
                       <Link to={`/blog/${post.slug}`} className="w-16 h-16 rounded-xl overflow-hidden bg-slate-100 dark:bg-slate-800 flex-shrink-0">
-                        <img
+                        <SafeImage
                           src={post.coverImage}
                           alt={post.title}
                           className="w-full h-full object-cover group-hover:scale-105 transition-transform"

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import SafeImage from '../components/SafeImage';
 import { ShieldAlert, Users, FileText, MessageSquare, Eye, Trash2, Calendar, Clock, BookOpen, User } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -362,7 +363,7 @@ const AdminDashboard = () => {
                     <tr key={blog._id} className="hover:bg-slate-50/50 dark:hover:bg-slate-850/30 transition-colors">
                       <td className="px-6 py-4">
                         <div className="flex items-center gap-3">
-                          <img src={blog.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800'} alt={blog.title} className="w-12 h-8.5 rounded object-cover bg-slate-100 dark:bg-slate-800" />
+                          <SafeImage src={blog.coverImage} alt={blog.title} className="w-12 h-8.5 rounded object-cover bg-slate-100 dark:bg-slate-800" />
                           <Link to={`/blog/${blog.slug}`} className="font-bold text-sm text-slate-800 dark:text-slate-200 hover:text-primary-655 hover:underline max-w-xs truncate">
                             {blog.title}
                           </Link>

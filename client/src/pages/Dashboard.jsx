@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
+import SafeImage from '../components/SafeImage';
 import { LayoutDashboard, FileText, Eye, Heart, Plus, Edit2, Trash2, BookOpen, Clock } from 'lucide-react';
 import toast from 'react-hot-toast';
 
@@ -164,8 +165,8 @@ const Dashboard = () => {
                     {/* Title and image */}
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-4.5">
-                        <img
-                          src={blog.coverImage || 'https://images.unsplash.com/photo-1499750310107-5fef28a66643?w=800'}
+                        <SafeImage
+                          src={blog.coverImage}
                           alt={blog.title}
                           className="w-16 h-11.5 rounded-lg object-cover bg-slate-100 dark:bg-slate-800"
                         />
